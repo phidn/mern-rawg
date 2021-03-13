@@ -1,13 +1,276 @@
+:root {
+  --mg-0: 8px;
+  --mg-1: 20px;
+  --mg-2: 120px;
+  --mg-3: 40px;
+  --br-0: 24px;
+  --br-1: 4px;
+  --br-2: 12px;
+  --pd-0: 24px;
+  --pd-1: 8px;
+  --pd-2: 20px;
+  --pd-3: 16px;
+  --text-color-1: hsla(0,0%,100%,0.6);
+  --color-dark-0: #151515;
+  --color-dark-2: #202020;
+  --color-gray-0: #777;
+}
+
+* { margin: 0; padding: 0}
+
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #fff;
+  background-color: #151515;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.page {}
+
+.header {
+  position: relative;
+  width: 100%;
+  z-index: -2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 24px 40px;
+}
+
+.auth__art {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -3;
+  width: 100%;
+}
+
+.art-wrapper {
+  width: 100%;
+  background-color: transparent;
+  background-image: linear-gradient(to left, rgba(0, 0, 0, 0.7), rgb(21, 21, 21)), url("https://rawg.io/assets/images/spider-man_rgba(0,0,0,0.7).aa931f171040e196bae2a2b22fccd671.jpg");
+  background-size: cover;
+}
+
+.header__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+
+a.header__item-logo {
+  font-weight: 900;
+  color: white;
+  text-decoration: none;
+  letter-spacing: 5px;
+  font-size: 18px;
+}
+
+.header__form-search {
+  flex-grow: 1;
+}
+
+.header__form-search .form-search__input_area {
+  position: relative;
+  width: 80%;
+  margin: auto;
+  color: var(--text-color-1);
+  background-color: hsla(0,0%,100%,.16);
+  border-radius: var(--br-0);
+}
+
+.header__form-search .form-search__input_area:hover,
+.header__form-search .form-search__input_area:focus-within {
+  color: #000;
+  background-color: #fff;
+}
+
+
+.header__form-search i.fa-search {
+  position: absolute;
+  left: 17px;
+  line-height: 44px;
+  font-weight: 400;
+}
+
+.header__form-search input {
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0 44px;
+  color: var(--text-color-1);
+  background-color: transparent;
+  border-radius: var(--br-0);
+  border:none;
+  outline: none;
+}
+
+.header__form-search input:hover,
+.header__form-search input:focus {
+  color: #000;
+  background-color: #fff;
+}
+
+a.header__item-link {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin: 0 var(--mg-0);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+a.header__item-link:hover:not(:last-child) {
+  border-bottom: 2px solid #fff;
+}
+
+@media screen and (max-width : 768px) {
+  a.header__item-link:not(:last-child) {
+    display: none;
+  }
+}
+
+/* auth form */
+.auth__form {
+  width: 100%;
+  margin-top: var(--mg-1);
+  display: flex;
+  justify-content: center;
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.form-login input {
+  height: 50px;
+  width: 300px;
+  padding: 0 var(--pd-0);
+  color: #fff;
+  background: rgba(0 0 0 / 50%);
+  margin-bottom: var(--mg-1);
+  border-radius: var(--br-1);
+  outline: none;
+  border:none;
+}
+
+.form-login .btn-submit {
+  border-radius: var(--br-1);
+  margin-top: var(--mg-1);
+  height: 50px;
+  outline: none;
+  border:none;
+}
+
+.form-login .link-signup {
+  margin-top: var(--mg-1);
+}
+
+.form-login .link-signup a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.form-login .link-signup a:hover {
+  text-decoration: underline;
+}
+
+
+/* home page */
+.page__genres {
+  padding: 0 40px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.page__genres a.genres__item {
+  margin: var(--mg-0) var(--mg-0) 0 0;
+  padding: var(--pd-1) var(--pd-2);
+  color: hsla(0,0%,100%,.4);
+  text-decoration: none;
+  font-size: 16px;
+
+  background-color: hsla(0,0%,100%,.07);
+  border-radius: 16px;
+}
+
+.page__genres a.genres__item-active {
+  background-color: #fff;
+  color: var(--color-dark-0);
+}
+
+
+/* page genres content */
+.genres-content {
+  margin-left: var(--mg-3);
+  margin-top: var(--mg-3);
+}
+
+.game-item {
+  position: relative;
+  background-color: var(--color-dark-2);
+  border-radius: var(--br-2);
+}
+
+.game-item__img__top {
+  height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  /* position: relative; */
+}
+.game-item__info {
+  padding: var(--pd-3);
+}
+
+.game-item__info__detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.game-item__info__detail__platforms {
+  display: flex;
+}
+
+.game-item__info__detail__platforms svg {
+  margin-right: 4px;
+}
+
+.game-item__info__detail__metascore span {
+  padding: 2px 5px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.game-item__info__title {
+  margin-top: var(--mg-0);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 30px;
+  height: 30px;
+}
+
+.game-item__info__title-react svg {
+  margin-top: -10px;
+  font-size: 26px;
+  line-height: 30px;
+  color: var(--color-gray-0);
 }
