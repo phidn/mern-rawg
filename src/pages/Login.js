@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginForm from '../components/forms/LoginForm'
+import LoginForm from '../components/LoginForm'
 import Header from '../components/Header'
 
 export default function Login(props) {

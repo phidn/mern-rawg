@@ -16,6 +16,7 @@ const platforms = new Map([
   ['linux', FaLinux]
 ]);
 
-export const getPlatformIcon = (slug) => {
+export function getPlatformIcon(slug) {
   return platforms.get(slug);
 }
+
