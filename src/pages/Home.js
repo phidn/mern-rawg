@@ -23,9 +23,7 @@ export default function Home(props) {
     },
     gamesRender: []
   });
-  
-  console.log("~ gamesRender", state.gamesRender);
-  
+    
   const {games, nextPageNumber} = useSelector(state => state.GameReducer);
   // console.log("~ games", games);
   // console.log("~ nextPageNumber", nextPageNumber);
@@ -54,14 +52,17 @@ export default function Home(props) {
         }
       }
     }
+    
     setState((state) => ({
       ...state,
       gamesRender: gamesResult
     }))
-  }, [columnNumber, games]);
 
+  }, [columnNumber, games]);
+  console.log("~ state", state)
   let { genres } = clientParams;
   
+
   return (
     <div className="page">
       <Header/>
@@ -89,19 +90,6 @@ export default function Home(props) {
               </div>
             })
           }
-          {/* <div className="genres-column col-3">
-            <GameItem/>
-            <GameItem/>
-          </div>
-          <div className="genres-column col-3">
-            <GameItem/>
-          </div>
-          <div className="genres-column col-3">
-            <GameItem/>
-          </div>
-          <div className="genres-column col-3">
-            <GameItem/>
-          </div> */}
         </div>
       </div>
     </div>

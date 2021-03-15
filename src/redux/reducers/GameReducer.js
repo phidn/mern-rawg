@@ -1,7 +1,9 @@
-import { SET_GAME_GENRES } from "./../../utils/constants";
+import { SET_GAME_GENRES, SET_VIDEO_GAME_RENDER } from "./../../utils/constants";
 
 const initialState = {
   games: [],
+  videoGameRender: [],
+  videoGameRenderNumber: 8,
   nextPageNumber: null
 }
 
@@ -18,6 +20,8 @@ export default (state = initialState, action) => {
       }
     }; break;
   }
+  
+  console.log("~ state", state.videoGameRender);
   return {...state}
 }
 /* eslint-enable */
