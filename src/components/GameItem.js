@@ -1,18 +1,25 @@
-import React, { useEffect } from 'react'
-import { getPlatformIcon } from '../utils/clientHelper'
+import React, { useEffect, useState } from 'react'
+import { getPlatformIcon, elementInViewport } from '../utils/clientHelper'
 import { BsFillPlayFill } from "react-icons/bs"
 import { AiFillLike, AiOutlineYoutube } from "react-icons/ai"
 import $ from "jquery";
 import _ from "lodash";
+import GameItemImage from './GameItemImage';
 // import VideoGame from './VideoGame';
 
-export default function GameItem(props) {
+function GameItem(props) {
+  // console.log("~ props", props.gameInfo);
   let backgroundImage = props.gameInfo.background_image;
   let titleName = props.gameInfo.name;
   let score = props.gameInfo.metacritic;
-  let srcVideo = "";
+  let srcVideo = props.gameInfo.clip.clips["640"];
+  const [showVideo, setShowVideo] = useState(false);
   
   const handleMouseEnter = (event) => {
+    if(!showVideo) {
+      setShowVideo(true);
+    }
+
     let image = $(event.target).parents(".game-item").find(".game-item__img__top");
     let video = $(event.target).parents(".game-item").find("video");
     let playButton = $(event.target).parents(".game-item").find(".game-item__btn__bottom>svg");
@@ -22,8 +29,6 @@ export default function GameItem(props) {
     playButton.css("opacity","0");
     fullVideoButton.css("opacity","0.7");
     video.trigger("play");
-
-    // let srcVideo = video.attr("src");
   }
 
   const handleMouseLeave = (event) => {
@@ -37,7 +42,6 @@ export default function GameItem(props) {
     image.css("display","block");
     playButton.css("opacity","1");
     fullVideoButton.css("opacity","0");
-    // image.css("opacity","0.5");
   }
 
   let platforms = props.gameInfo.platforms;
@@ -51,33 +55,28 @@ export default function GameItem(props) {
     });
     return _.uniq(arrSlugPlatform);
   }
-  let arrSlugRender = getSlugsRender();
 
-  // console.log("~ arrSlugRender", arrSlugRender)
-  // console.log(platformsRender, platformsRender());
+  let arrSlugRender = getSlugsRender();
 
   return (
     <div 
       className="game-item" 
-      onMouseEnter={
-        srcVideo.length>0? handleMouseEnter: () => {}
-      }
-      onMouseLeave={
-        srcVideo.length>0? handleMouseLeave: () => {}
-      }
+      onMouseEnter={ !!srcVideo? handleMouseEnter: () => {} }
+      onMouseLeave={ !!srcVideo? handleMouseLeave: () => {} }
     >
       <div className="game-item__card__top">
         {
-          srcVideo.length>0? (
-            <video src="" loop muted></video>
-          ): ""
+          showVideo && (
+            <video 
+              src={srcVideo} loop muted
+              onLoadedData={(event) => $(event.target).trigger("play")}
+            ></video>
+          )
         }
-        <div className="game-item__img__top" style={{backgroundImage:`url('${backgroundImage}')`}}></div>
+        <GameItemImage backgroundImage={backgroundImage} hasVideo={showVideo} />
         <div className="game-item__btn__bottom">
           <BsFillPlayFill/>
-          <span>
-            <AiOutlineYoutube/> Full Video
-          </span>
+          <span> <AiOutlineYoutube/>Full Video</span>
         </div>
       </div>
       <div className="game-item__info">
@@ -104,3 +103,5 @@ export default function GameItem(props) {
     </div>
   )
 }
+
+export default React.memo(GameItem);
