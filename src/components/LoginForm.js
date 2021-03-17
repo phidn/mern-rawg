@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 export default function LoginForm(props) {
   return (
@@ -7,7 +8,9 @@ export default function LoginForm(props) {
       <input type="text" name="email" placeholder="Email"/>
       <input type="text" name="password" placeholder="Password"/>
       <button className="btn-submit">Log in</button>
-      <div className="link-signup">Don't have an account?&nbsp;<a href="/#">Sign up.</a></div>
+      <div className="link-signup">Don't have an account?&nbsp;
+        <NavLink to="/signup">Sign up.</NavLink>
+      </div>
     </div>
   )
 }

@@ -16,11 +16,11 @@ const platforms = new Map([
   ['linux', FaLinux]
 ]);
 
-export function getPlatformIcon(slug) {
+export const getPlatformIcon = (slug) => {
   return platforms.get(slug);
 }
 
-export function elementInViewport(el) {
+export const elementInViewport = (el) => {
   const rect = el.getBoundingClientRect();
   const windowHeight =
     window.innerHeight || document.documentElement.clientHeight;
@@ -29,4 +29,9 @@ export function elementInViewport(el) {
   return (
     rect.top >= 0 && rect.left >= 0 && rect.top <= windowHeight + offsetTop
   );
+}
+
+export const formatImageUrl = (url) => {
+  let urlObj = new URL(url);
+  return urlObj.pathname.replace("/media","https://media.rawg.io/media/crop/600/400");
 }

@@ -1,10 +1,15 @@
-import { SET_GAME_GENRES, SET_VIDEO_GAME_RENDER } from "./../../utils/constants";
+import { SET_GAME_GENRES, SET_SRC_MODAL_GAME, SET_MODAL_GAME } from "./../../utils/constants";
 
 const initialState = {
   games: [],
   videoGameRender: [],
   videoGameRenderNumber: 8,
-  nextPageNumber: null
+  nextPageNumber: null,
+  modalGameItem: {
+    modal: null,
+    srcId: null,
+    showModal: false
+  }
 }
 
 /* eslint-disable */
@@ -19,9 +24,16 @@ export default (state = initialState, action) => {
         state.nextPageNumber = number;
       }
     }; break;
+
+    case SET_MODAL_GAME: {
+      state.modalGameItem.modal = action.modal;
+    }; break;
+
+    case SET_SRC_MODAL_GAME: {
+      state.modalGameItem.srcId = action.srcId;
+    }; break;
   }
   
-  console.log("~ state", state.videoGameRender);
   return {...state}
 }
 /* eslint-enable */

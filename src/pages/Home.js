@@ -5,6 +5,9 @@ import clientParams from "./../utils/clientParams";
 import { useDispatch, useSelector } from "react-redux";
 import { FETCH_GAME_GENRES_SAGA } from '../utils/constants';
 import { isMobile, isTablet, isDesktop } from "react-device-detect";
+import { NavLink } from 'react-router-dom';
+import Loading from '../components/Loading';
+import GameItemModal from '../components/GameItemModal';
 
 const getColumnNumber = () => {
   if(isMobile) return 1;
@@ -13,83 +16,116 @@ const getColumnNumber = () => {
 }
 
 export default function Home(props) {
-  let slugParam = props.match.params.genres || "action";
+  let { genres } = clientParams;  
   let columnNumber = getColumnNumber();
-
-  const [state, setState] = useState({
-    currentGenres: {
-      slug: slugParam,
-      page: 1
-    },
-    gamesRender: []
-  });
-    
-  const {games, nextPageNumber} = useSelector(state => state.GameReducer);
-  // console.log("~ games", games);
-  // console.log("~ nextPageNumber", nextPageNumber);
-
-  let { slug } = state.currentGenres;
+  let slugParamGenres = props.match.params.genres || "action";
   
+  const [state, setState] = useState({
+    nextPage: 1,
+    gamesRender: [],
+  });
+  
+  const {games, nextPageNumber} = useSelector(state => state.GameReducer);
+  const loading = useSelector(state => state.AppReducer.loading);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    if(slug.length>0) {
+    if(!!slugParamGenres) {
       dispatch({
         type: FETCH_GAME_GENRES_SAGA,
-        slug: state.currentGenres.slug,
-        pageNumber: state.currentGenres.page,
+        slug: slugParamGenres,
+        pageNumber: state.nextPage,
       });
     };
-  },[slug]);
+  },[slugParamGenres, state.nextPage]);
 
   useEffect(() => {
-    let gamesResult = [];
-    for (let i = 0; i < columnNumber; i++) {
-      gamesResult[i] = [];
-      for (let j = 0; j < games.length; j++) {
-        let resetIndex = j - i;
-        if( resetIndex % columnNumber === 0) {
-          gamesResult[i].push(games[j])
+    if(!!games) {
+      let gamesResult = [];
+      for (let i = 0; i < columnNumber; i++) {
+        gamesResult[i] = [];
+        for (let j = 0; j < games.length; j++) {
+          let resetIndex = j - i;
+          if( resetIndex % columnNumber === 0) {
+            gamesResult[i].push(games[j])
+          }
         }
       }
+      setState((state) => {
+        if(!state.gamesRender.length) {
+          return { ...state, gamesRender: [ gamesResult ] }
+        } else {
+          return { 
+            ...state, 
+            gamesRender: [ ...state.gamesRender, gamesResult ]
+          }
+        }
+      });
     }
-    
-    setState((state) => ({
-      ...state,
-      gamesRender: gamesResult
-    }))
-
   }, [columnNumber, games]);
-  console.log("~ state", state)
-  let { genres } = clientParams;
-  
+
+  // call everytime component did update
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 200
+      ) {
+        setState(state => ({
+          ...state,
+          nextPage: nextPageNumber
+        }))
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  });
+
 
   return (
     <div className="page">
+      { loading && <Loading/> }
       <Header/>
       <div className="page__genres">
         {
           genres.map((item,index) => {
-            return <a key={index} 
-              className={
-                item.slug === slugParam? "genres__item genres__item-active": "genres__item"
+            return <NavLink
+              key={index} 
+              className= {
+                item.slug === slugParamGenres? "genres__item genres__item-active": "genres__item"
               } 
-              href={`/games/${item.slug}`}>{item.name}</a>
+              to={`/games/${item.slug}`}
+              >{item.name}</NavLink>
           })
         }
       </div>
-      <div className="genres-content">
+      <div className="genres-content" style={{ opacity: `${loading? 0: 1}` }}>
+        <GameItemModal/>
         <div className="row pe-0 me-0">
           {
-            state.gamesRender?.map((column, indexColum) => {
-              return <div key={indexColum} className="genres-column col-3">
+            [...Array(columnNumber).keys()].map((index) => {
+              return <div key={index} className="genres-column col-3">
                 {
-                  column.map((game) => {
-                    return <GameItem key={game.id} gameInfo={game} />
+                  state.gamesRender?.map(page => {
+                    return page.map((column, indexColum) => {
+                      if(indexColum===index) {
+                        return column.map(game => {
+                          return <GameItem key={game.id} gameInfo={game} />
+                        })
+                      }
+                    })
                   })
                 }
               </div>
             })
           }
+        </div>
+        <div className="row genres__content__loading pe-0 me-0">
+          { !loading && <Loading/> }
         </div>
       </div>
     </div>

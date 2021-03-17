@@ -5,12 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from "./redux/configStore";
 import { Provider } from 'react-redux';
+import "bootstrap/scss/bootstrap.scss";
+
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
-    </Provider>,
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
