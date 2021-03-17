@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { elementInViewport } from "./../utils/clientHelper";
+import { elementInViewport, formatImageUrl } from "./../utils/clientHelper";
 
 
 const GameItemImage = ({ backgroundImage, hasVideo}) => {
@@ -9,8 +9,8 @@ const GameItemImage = ({ backgroundImage, hasVideo}) => {
   useEffect(() => {
     const handleScroll = () => {
       if (!loaded && bgRef.current && elementInViewport(bgRef.current)) {
-        // const bgUrl = formatImageUrl(backgroundImage, hasVideo);
-        bgRef.current.style.backgroundImage = `url(${backgroundImage})`;
+        const bgUrl = formatImageUrl(backgroundImage);
+        bgRef.current.style.backgroundImage = `url(${bgUrl})`;
         setLoaded(true);
       }
     };
