@@ -1,4 +1,4 @@
-import { SET_GAME_GENRES, SET_SRC_MODAL_GAME, SET_MODAL_GAME } from "./../../utils/constants";
+import { SET_GAME_GENRES, SET_SRC_MODAL_GAME, SET_MODAL_GAME, SET_GAME_KEYWORD } from "./../../utils/constants";
 
 const initialState = {
   games: [],
@@ -9,7 +9,8 @@ const initialState = {
     modal: null,
     srcId: null,
     showModal: false
-  }
+  },
+  gameKeyword: []
 }
 
 /* eslint-disable */
@@ -31,6 +32,10 @@ export default (state = initialState, action) => {
 
     case SET_SRC_MODAL_GAME: {
       state.modalGameItem.srcId = action.srcId;
+    }; break;
+
+    case SET_GAME_KEYWORD: {
+      state.gameKeyword = action.gameKeyword;
     }; break;
   }
   

@@ -13,7 +13,8 @@ const platforms = new Map([
   ['xbox', FaXbox],
   ['ios', FaApple],
   ['android', FaAndroid],
-  ['linux', FaLinux]
+  ['linux', FaLinux],
+  ['macos', FaApple]
 ]);
 
 export const getPlatformIcon = (slug) => {

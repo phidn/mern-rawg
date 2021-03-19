@@ -6,7 +6,7 @@ import $ from "jquery";
 import _ from "lodash";
 import GameItemImage from './GameItemImage';
 import Loading from './Loading';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { SET_SRC_MODAL_GAME } from '../utils/constants';
 
 function GameItem(props) {
@@ -54,14 +54,14 @@ function GameItem(props) {
 
   let platforms = props.gameInfo.platforms;
   let getSlugsRender = () => {
-    let platformKey = [ "pc", "playstation", "xbox", "ios", "android", "linux" ]
+    let platformKey = [ "pc", "playstation", "xbox", "ios", "android", "linux", "macos" ];
     let arrSlugPlatform = platforms.map(({platform}, index) => {
       let slugPlatform = platformKey.find(item => platform.slug.includes(item));
       if(slugPlatform) {
         return slugPlatform;
       }
     });
-    return _.uniq(arrSlugPlatform);
+    return _.without(_.uniq(arrSlugPlatform), undefined);
   }
 
   let arrSlugRender = getSlugsRender();
