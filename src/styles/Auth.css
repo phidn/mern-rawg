@@ -1,0 +1,46 @@
+/* auth form */
+.auth__form {
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+.form-login input {
+  height: 50px;
+  width: 300px;
+  color: #fff;
+  padding: 0 1rem;
+  background: rgba(0 0 0 / 50%);
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  outline: none;
+  border:none;
+}
+
+.form-login .btn-submit {
+  border-radius: 4px;
+  margin-top: 1rem;
+  height: 50px;
+  outline: none;
+  border:none;
+}
+
+.form-login .link-signup {
+  margin-top: 1rem;
+}
+
+.form-login .link-signup a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.form-login .link-signup a:hover {
+  text-decoration: underline;
+}

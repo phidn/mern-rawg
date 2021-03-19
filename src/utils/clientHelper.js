@@ -35,3 +35,10 @@ export const formatImageUrl = (url) => {
   let urlObj = new URL(url);
   return urlObj.pathname.replace("/media","https://media.rawg.io/media/crop/600/400");
 }
+
+export const getColumnNumber = () => {
+  if(window.innerWidth>=1200) return 4;
+  if(window.innerWidth>=992) return 3
+  if(window.innerWidth>=768) return 2;
+  if(window.innerWidth<768) return 1;
+}
