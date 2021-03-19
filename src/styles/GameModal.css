@@ -1,0 +1,18 @@
+.game-item-modal .modal-content {
+  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+  padding: 0;
+  border: none;
+}
+
+.game-item-modal button {
+  position: absolute;
+  z-index: 10;
+  right: -50px;
+  padding: 10px;
+  border-radius: 50%;
+  border: 1px solid;
+}
+
+.game-item-modal .modal-content .ytp-pause-overlay.ytp-scroll-min {
+  display: none!important;
+}

@@ -1,6 +1,6 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-// import $ from "jquery";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import "./../styles/Header.css";
 
 export default function Header() {
   return (
@@ -9,7 +9,7 @@ export default function Header() {
         <NavLink to="/" className="header__item-logo">RAWG</NavLink>
       </div>
       <div className="header__item header__form-search">
-        <div className="form-search__input_area">
+        <div className="form-search__input">
           <i className="fa fa-search"></i>
           <input type="text" placeholder="Search 520.198 games"/>
         </div>
@@ -17,8 +17,6 @@ export default function Header() {
       <div className="header__item">
         <NavLink to="/login" className="header__item-link">Login</NavLink>
         <NavLink to="/signup" className="header__item-link">Sign up</NavLink>
-        <NavLink to="/#" className="header__item-link">API</NavLink>
-        <a href="/#" className="header__item-link">...</a>
       </div>
     </header>
   )

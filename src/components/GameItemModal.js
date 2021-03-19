@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Modal } from 'bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_MODAL_GAME, SET_SRC_MODAL_GAME } from '../utils/constants'
+import "./../styles/GameModal.css"; 
 
 export default function GameItemModal(props) {
   const [modal, setModal] = useState(null);
