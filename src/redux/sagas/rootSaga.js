@@ -4,5 +4,6 @@ import * as Game from "./GameSaga";
 export function * rootSaga() {
   yield all([
     Game.watchFetchGameGenresSaga(),
+    Game.watchFetchGameKeywordSaga(),
   ]);
 }

@@ -108,9 +108,8 @@ export default function Home(props) {
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton2">
             {
             genres.map((item,index) => {
-              return <li>
+              return <li key={index}>
                 <NavLink             
-                  key={index} 
                   className= {
                     item.slug === slugParamGenres? "dropdown-item": "dropdown-item"
                   } 
