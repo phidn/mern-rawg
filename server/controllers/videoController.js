@@ -30,3 +30,22 @@ exports.likeVideo = async (req,res,next) => {
     res.status(500).json(error);
   }
 }
+
+exports.getAll = async (req,res,next) => {
+  try {
+    let { userId } = req.user;
+
+    let video = await Video.find(
+      { user: userId, isLike: true },
+      { rawgVideoId: 1 }
+    );
+    
+    res.status(200).json({
+      status:"success",
+      data: { video }
+    })
+
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}

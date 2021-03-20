@@ -3,7 +3,7 @@ import cors from "cors";
 import connectDB from "./configs/db";
 import authRoute from "./routes/authRoute";
 import videoRoute from "./routes/videoRoute";
-// require('dotenv').config();
+import { errorHandler } from "./middlewares/errorHandler";
 
 connectDB();
 let app = express();
@@ -17,6 +17,14 @@ app.use(express.json());
 // Mount routes
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/video", videoRoute);
+
+// Handle error
+app.all("*", (req, res, next) => {
+  const err = new Error("The route can not be found");
+  err.statusCode = 404;
+  next(err) ;
+})
+app.use(errorHandler);
 
 let hostname = process.env.APP_HOST;
 let port = process.env.APP_PORT;
