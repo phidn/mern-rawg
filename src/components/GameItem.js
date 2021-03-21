@@ -12,12 +12,13 @@ import { SET_SRC_MODAL_GAME, TOGGLE_LIKE_GAME_SAGA } from '../utils/constants';
 function GameItem(props) {
   const dispatch = useDispatch();
   let backgroundImage = props.gameInfo?.background_image;
-  let titleName = props.gameInfo?.name;
-  let score = props.gameInfo?.metacritic;
+  let { id, isLike, name, metacritic } = props.gameInfo;
+
   let srcVideo = props.gameInfo?.clip?.clips["640"];
   let srcVideoYoutube = props.gameInfo?.clip?.video;
 
   const [showVideo, setShowVideo] = useState(false);
+  const [likeGame, setLikeGame] = useState(isLike);
   const [loading, setLoading] = useState(false);
 
   const handleMouseEnter = (event) => {
@@ -66,8 +67,12 @@ function GameItem(props) {
 
   let arrSlugRender = getSlugsRender();
 
-  const handleLikeGame = () => {
-    dispatch({ type: TOGGLE_LIKE_GAME_SAGA });
+  const handleLikeGame = (id) => {
+    dispatch({ 
+      type: TOGGLE_LIKE_GAME_SAGA,
+      gameId: id
+    });
+    setLikeGame(!likeGame);
   }
 
   return (
@@ -96,7 +101,6 @@ function GameItem(props) {
                   type: SET_SRC_MODAL_GAME,
                   srcId: srcVideoYoutube
                 });
-                // modal.show();
               }}><AiOutlineYoutube/>Full Video</button>
             </div>
           )
@@ -114,14 +118,20 @@ function GameItem(props) {
             }
           </div>
           <div className="game-item__info__detail__metascore">
-            <span style={{ color:"#6dc849", border: "1px solid rgba(109,200,73,.4)"}}>{score||""}</span>
+            <span style={{ color:"#6dc849", border: "1px solid rgba(109,200,73,.4)"}}>{metacritic||""}</span>
           </div>
         </div>
         <div className="game-item__info__title">
-          <span href="#/">{ titleName }</span>
-          <div onClick={ handleLikeGame } className="game-item__info__title-react">
-            <AiFillLike/>
-          </div>
+          <span href="#/">{ name }</span>
+          {
+            !!id && (
+              <div onClick={ () => handleLikeGame(id) } className="game-item__info__title-react">
+              {
+                likeGame? <AiFillLike style={{color:"blueviolet"}}/>: <AiFillLike/>
+              }
+            </div>
+            )
+          }
         </div>
       </div>
     </div>

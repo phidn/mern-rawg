@@ -31,7 +31,7 @@ export default function GameItemModal(props) {
         });
       })
     }
-  }, [modal]);
+  }, [modal, dispatch]);
 
   const {srcId} = useSelector(state => state.GameReducer.modalGameItem);
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function GameItemModal(props) {
       modal.show();
       setShowFrameYT(true);
     }
-  }, [srcId]);
+  }, [srcId,modal]);
 
 
   return (

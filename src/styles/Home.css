@@ -158,6 +158,11 @@
   font-size: 26px;
   line-height: 30px;
   color: var(--color-gray-0);
+  transition: 0.3s;
+}
+
+.game-item__info__title-react svg:hover {
+  color: blueviolet;
 }
 
 .page__genres .dropdown {
