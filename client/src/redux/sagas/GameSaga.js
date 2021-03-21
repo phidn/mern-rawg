@@ -62,18 +62,9 @@ export function * watchFetchGameKeywordSaga() {
 
 function * toggleLikeGameSaga(action) {
   try {
-    const {data, status} = yield call(() => {
+    yield call(() => {
       return gameService.toggleLikeGame(action.gameId);
     });
-
-    if(status === STATUS_CODE.SUCCESS) {
-      // yield put({
-      //   type: SET_GAME_KEYWORD,
-      //   gameKeyword: data.results
-      // });
-    }
-
-    yield put({ type: HIDE_LOADING });
   } catch (error) {
     console.log("~ error", error.response?.data);
   }

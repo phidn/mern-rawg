@@ -33,7 +33,7 @@ export default function Home(props) {
     dispatch({
       type: FETCH_GAME_USER_LIKED_SAGA
     });
-  }, []);
+  }, [dispatch]);
 
   const gameLiked = useSelector(state => state.GameReducer.gameLiked);
 
