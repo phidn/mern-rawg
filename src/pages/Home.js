@@ -5,7 +5,7 @@ import Header from '../components/Header'
 import clientParams from "./../utils/clientParams";
 import { getColumnNumber } from "./../utils/clientHelper";
 import { useDispatch, useSelector } from "react-redux";
-import { FETCH_GAME_GENRES_SAGA } from '../utils/constants';
+import { FETCH_GAME_GENRES_SAGA, FETCH_GAME_USER_LIKED_SAGA } from '../utils/constants';
 import { NavLink } from 'react-router-dom';
 import Loading from '../components/Loading';
 import GameItemModal from '../components/GameItemModal';
@@ -30,7 +30,12 @@ export default function Home(props) {
     window.onresize = () => {
       setColumnNumber(getColumnNumber());
     };
+    dispatch({
+      type: FETCH_GAME_USER_LIKED_SAGA
+    });
   }, []);
+
+  const gameLiked = useSelector(state => state.GameReducer.gameLiked);
 
   useEffect(() => {
     setState({
@@ -47,7 +52,7 @@ export default function Home(props) {
         pageNumber: state.nextPage || 1,
       });
     };
-  },[slugParamGenres, state.nextPage]);
+  },[slugParamGenres, state.nextPage, dispatch]);
 
   useEffect(() => {
     if(!!games && !!columnNumber) {
@@ -57,7 +62,11 @@ export default function Home(props) {
         for (let j = 0; j < games.length; j++) {
           let resetIndex = j - i;
           if( resetIndex % columnNumber === 0) {
-            gamesResult[i].push(games[j])
+            let index = gameLiked.findIndex(item => item.rawgVideoId == games[j].id)
+            if(index !== -1) { 
+              games[j].isLike = true 
+            }
+            gamesResult[i].push(games[j]);
           }
         }
       }
@@ -72,8 +81,7 @@ export default function Home(props) {
         }
       });
     }
-  }, [games, columnNumber]);
-  console.log("~ state.gamesRender", state.gamesRender)
+  }, [games, columnNumber, gameLiked]);
 
   useEffect(() => {
     const handleScroll = () => {

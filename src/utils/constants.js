@@ -1,5 +1,6 @@
 // system constant
 export const DOMAIN = "https://api.rawg.io/api";
+export const SERVER_DOMAIN = "http://localhost:5000/api/v1";
 export const ACCESS_TOKEN = "rawg_token";
 export const STATUS_CODE = {
   SUCCESS: 200
@@ -12,6 +13,8 @@ export const SET_VIDEO_GAME_RENDER = "SET_VIDEO_GAME_RENDER";
 export const SET_MODAL_GAME = "SET_MODAL_GAME";
 export const SET_SRC_MODAL_GAME = "SET_SRC_MODAL_GAME";
 export const TOGGLE_LIKE_GAME_SAGA = "TOGGLE_LIKE_GAME_SAGA";
+export const FETCH_GAME_USER_LIKED_SAGA = "FETCH_GAME_USER_LIKED_SAGA";
+export const SET_GAME_LIKED = "SET_GAME_LIKED";
 
 // game keyword contants
 export const FETCH_GAME_KEYWORD_SAGA = "FETCH_GAME_KEYWORD_SAGA";

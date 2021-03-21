@@ -1,4 +1,4 @@
-import { SET_GAME_GENRES, SET_SRC_MODAL_GAME, SET_MODAL_GAME, SET_GAME_KEYWORD } from "./../../utils/constants";
+import { SET_GAME_GENRES, SET_SRC_MODAL_GAME, SET_MODAL_GAME, SET_GAME_KEYWORD, SET_GAME_LIKED } from "./../../utils/constants";
 
 const initialState = {
   games: [],
@@ -10,7 +10,8 @@ const initialState = {
     srcId: null,
     showModal: false
   },
-  gameKeyword: []
+  gameKeyword: [],
+  gameLiked: []
 }
 
 /* eslint-disable */
@@ -36,6 +37,10 @@ export default (state = initialState, action) => {
 
     case SET_GAME_KEYWORD: {
       state.gameKeyword = action.gameKeyword;
+    }; break;
+   
+    case SET_GAME_LIKED: {
+      state.gameLiked = action.gameLiked;
     }; break;
   }
   

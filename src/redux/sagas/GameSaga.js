@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { gameService } from "../../services/GameService";
-import { FETCH_GAME_GENRES_SAGA, FETCH_GAME_KEYWORD_SAGA, HIDE_LOADING, SET_GAME_GENRES, SHOW_LOADING, STATUS_CODE, SET_GAME_KEYWORD, TOGGLE_LIKE_GAME_SAGA } from "./../../utils/constants";
+import { FETCH_GAME_GENRES_SAGA, FETCH_GAME_KEYWORD_SAGA, HIDE_LOADING, SET_GAME_GENRES, SHOW_LOADING, STATUS_CODE, SET_GAME_KEYWORD, TOGGLE_LIKE_GAME_SAGA, FETCH_GAME_USER_LIKED_SAGA, SET_GAME_LIKED } from "./../../utils/constants";
 
 function * fetchGameGenresSaga(action) {
   try {
@@ -63,14 +63,14 @@ export function * watchFetchGameKeywordSaga() {
 function * toggleLikeGameSaga(action) {
   try {
     const {data, status} = yield call(() => {
-      return gameService.fetchGameKeyword(action.keyword);
+      return gameService.toggleLikeGame(action.gameId);
     });
 
     if(status === STATUS_CODE.SUCCESS) {
-      yield put({
-        type: SET_GAME_KEYWORD,
-        gameKeyword: data.results
-      });
+      // yield put({
+      //   type: SET_GAME_KEYWORD,
+      //   gameKeyword: data.results
+      // });
     }
 
     yield put({ type: HIDE_LOADING });
@@ -81,4 +81,26 @@ function * toggleLikeGameSaga(action) {
 
 export function * watchToggleLikeGameSaga() {
   yield takeLatest(TOGGLE_LIKE_GAME_SAGA, toggleLikeGameSaga);
+}
+
+function * fetchGameUserLikedSaga(action) {
+  try {
+    const {data, status} = yield call(() => {
+      return gameService.fetchGameLiked();
+    });
+
+    if(status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: SET_GAME_LIKED,
+        gameLiked: data.data.video
+      });
+    }
+
+  } catch (error) {
+    console.log("~ error", error.response?.data);
+  }
+}
+
+export function * watchFetchGameUserLikeSaga() {
+  yield takeLatest(FETCH_GAME_USER_LIKED_SAGA, fetchGameUserLikedSaga);
 }

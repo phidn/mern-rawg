@@ -80,9 +80,7 @@ export default function Header() {
     })
   }
 
-  const user = useContext(AppContext).state.user;
-  console.log("~ user", user);
-  
+  const user = useContext(AppContext).state.user;  
   const signOut = () => {
     localStorage.removeItem("awesome_twitter_token");
     dispatch({type: SET_CURRENT_USER, payload: null});
@@ -138,8 +136,7 @@ export default function Header() {
               <img src={`https://ui-avatars.com/api/name=${user.userName}?size=45&rounded=true&length=1&background=random`} alt="avatar" />
               <span className="ms-2">{user.userName}</span>
             </NavLink>
-            
-            <IoIosLogOut onClick={() => signOut()}/>
+            <span className="header__logout"><IoIosLogOut onClick={() => signOut()}/></span>
           </>: <>
             <NavLink to="/login" className="header__item-link">Login</NavLink>
             <NavLink to="/signup" className="header__item-link">Sign up</NavLink> 

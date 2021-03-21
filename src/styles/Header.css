@@ -106,6 +106,7 @@ a.header__item-logo:hover {
   color: white;
   margin-bottom: 1rem;
   max-height: 500px;
+  align-items: center;
 }
 
 .result-item__media img {
@@ -115,7 +116,19 @@ a.header__item-logo:hover {
   border-radius: 4px;
 }
 
+.result-item__info {
+  padding: 4px 8px;
+  flex-grow: 1;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.result-item__info:hover {
+  background-color: rgba(119, 136, 153, 0.384);
+}
+
 .result-item__info__platforms svg {
+  font-size: var(--fs-large);
   margin-right: 4px;
 }
 
@@ -143,7 +156,7 @@ a.header__item-link {
   border-bottom: 2px solid #fff;
 }
 
-.header__item svg {
+.header__logout svg {
   font-size: var(--fs-extra-large);
   cursor: pointer;
   line-height: 45px;

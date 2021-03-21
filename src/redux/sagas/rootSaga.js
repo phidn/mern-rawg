@@ -6,5 +6,6 @@ export function * rootSaga() {
     Game.watchFetchGameGenresSaga(),
     Game.watchFetchGameKeywordSaga(),
     Game.watchToggleLikeGameSaga(),
+    Game.watchFetchGameUserLikeSaga(),
   ]);
 }
