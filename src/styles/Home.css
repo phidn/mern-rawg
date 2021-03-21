@@ -149,6 +149,10 @@
   color: #fff;
 }
 
+.game-item__info__title-react {
+  cursor: pointer;
+}
+
 .game-item__info__title-react svg {
   margin-top: -10px;
   font-size: 26px;

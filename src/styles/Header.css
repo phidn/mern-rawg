@@ -119,6 +119,14 @@ a.header__item-logo:hover {
   margin-right: 4px;
 }
 
+a.header__item-profile {
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin: 0 0.5rem;
+  line-height: 45px;
+}
+
 a.header__item-link {
   color: #fff;
   text-decoration: none;
@@ -126,11 +134,19 @@ a.header__item-link {
   margin: 0 0.5rem;
   white-space: nowrap;
   font-weight: 600;
+  line-height: 45px;
 }
 
-a.header__item-link:hover:not(:last-child) {
+.header__item-link:hover {
+  cursor: pointer;
   color: #fff;
   border-bottom: 2px solid #fff;
+}
+
+.header__item svg {
+  font-size: var(--fs-extra-large);
+  cursor: pointer;
+  line-height: 45px;
 }
 
 @media screen and (max-width : 768px) {

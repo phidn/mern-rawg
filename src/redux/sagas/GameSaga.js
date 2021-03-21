@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { gameService } from "../../services/GameService";
-import { FETCH_GAME_GENRES_SAGA, FETCH_GAME_KEYWORD_SAGA, HIDE_LOADING, SET_GAME_GENRES, SHOW_LOADING, STATUS_CODE, SET_GAME_KEYWORD } from "./../../utils/constants";
+import { FETCH_GAME_GENRES_SAGA, FETCH_GAME_KEYWORD_SAGA, HIDE_LOADING, SET_GAME_GENRES, SHOW_LOADING, STATUS_CODE, SET_GAME_KEYWORD, TOGGLE_LIKE_GAME_SAGA } from "./../../utils/constants";
 
 function * fetchGameGenresSaga(action) {
   try {
@@ -58,4 +58,27 @@ function * fetchGameKeywordSaga(action) {
 
 export function * watchFetchGameKeywordSaga() {
   yield takeLatest(FETCH_GAME_KEYWORD_SAGA, fetchGameKeywordSaga);
+}
+
+function * toggleLikeGameSaga(action) {
+  try {
+    const {data, status} = yield call(() => {
+      return gameService.fetchGameKeyword(action.keyword);
+    });
+
+    if(status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: SET_GAME_KEYWORD,
+        gameKeyword: data.results
+      });
+    }
+
+    yield put({ type: HIDE_LOADING });
+  } catch (error) {
+    console.log("~ error", error.response?.data);
+  }
+}
+
+export function * watchToggleLikeGameSaga() {
+  yield takeLatest(TOGGLE_LIKE_GAME_SAGA, toggleLikeGameSaga);
 }

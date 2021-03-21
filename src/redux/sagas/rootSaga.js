@@ -5,5 +5,6 @@ export function * rootSaga() {
   yield all([
     Game.watchFetchGameGenresSaga(),
     Game.watchFetchGameKeywordSaga(),
+    Game.watchToggleLikeGameSaga(),
   ]);
 }

@@ -6,11 +6,12 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { SET_CURRENT_USER, TOKEN } from '../utils/constants';
 
-export default function LoginForm(props) {
+export default function SignupForm(props) {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const [userInput, setUserInput] = useState({
+    name: "",
     email: "",
     password: ""
   });
@@ -27,7 +28,7 @@ export default function LoginForm(props) {
     event.preventDefault();
     try {
       let response = await axios({
-        url: "/api/v1/auth/login",
+        url: "/api/v1/auth/register",
         method: "POST",
         data: userInput
       });
@@ -51,14 +52,16 @@ export default function LoginForm(props) {
       { errorMessage && (
         <div className="error-message text-danger mb-2">Error: {errorMessage}</div>
       )}
+      <input type="text" name="name" placeholder="Name" 
+        value={userInput.name} onChange={handleChange} />
       <input type="text" name="email" placeholder="Email" 
         value={userInput.email} onChange={handleChange} />
       <input type="password" name="password" placeholder="Password" 
         value={userInput.password} onChange={handleChange} />
 
-      <button className="btn-submit">Log in</button>
-      <div className="link-login-signup">Don't have an account?&nbsp;
-        <NavLink to="/signup">Sign up.</NavLink>
+      <button className="btn-submit">Sign up</button>
+      <div className="link-login-signup">Already have an account?&nbsp;
+        <NavLink to="/login">Login.</NavLink>
       </div>
     </form>
   )
