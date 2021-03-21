@@ -1,11 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import "./../styles/Header.css";
 import { getPlatformIcon } from '../utils/clientHelper'
 import { useDispatch, useSelector } from 'react-redux';
-import { FETCH_GAME_KEYWORD_SAGA } from '../utils/constants';
+import { FETCH_GAME_KEYWORD_SAGA, SET_CURRENT_USER } from '../utils/constants';
 import _ from "lodash";
-import $ from "jquery";
+import AppContext from "./AppContext";
+import { IoIosLogOut } from 'react-icons/io';
+
 
 export default function Header() {
   const wrapperRef = useRef(null);
@@ -78,6 +80,14 @@ export default function Header() {
     })
   }
 
+  const user = useContext(AppContext).state.user;
+  console.log("~ user", user);
+  
+  const signOut = () => {
+    localStorage.removeItem("awesome_twitter_token");
+    dispatch({type: SET_CURRENT_USER, payload: null});
+  }
+
   return (
     <header className="header">
       <div className="header__item">
@@ -117,13 +127,24 @@ export default function Header() {
                   )          
                 })
               }
-            </div>   
+            </div>
           )}
       </div>          
         </div>
       <div className="header__item">
-        <NavLink to="/login" className="header__item-link">Login</NavLink>
-        <NavLink to="/signup" className="header__item-link">Sign up</NavLink>
+        {
+          user? <>
+            <NavLink to={`/profile/@${user.userName}`} className="header__item-profile ms-2">
+              <img src={`https://ui-avatars.com/api/name=${user.userName}?size=45&rounded=true&length=1&background=random`} alt="avatar" />
+              <span className="ms-2">{user.userName}</span>
+            </NavLink>
+            
+            <IoIosLogOut onClick={() => signOut()}/>
+          </>: <>
+            <NavLink to="/login" className="header__item-link">Login</NavLink>
+            <NavLink to="/signup" className="header__item-link">Sign up</NavLink> 
+          </>
+        }
       </div>
     </header>
   )

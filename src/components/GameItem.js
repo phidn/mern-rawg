@@ -7,10 +7,10 @@ import _ from "lodash";
 import GameItemImage from './GameItemImage';
 import Loading from './Loading';
 import { useDispatch } from 'react-redux';
-import { SET_SRC_MODAL_GAME } from '../utils/constants';
+import { SET_SRC_MODAL_GAME, TOGGLE_LIKE_GAME_SAGA } from '../utils/constants';
 
 function GameItem(props) {
-  // console.log("~ props", props.gameInfo);
+  const dispatch = useDispatch();
   let backgroundImage = props.gameInfo?.background_image;
   let titleName = props.gameInfo?.name;
   let score = props.gameInfo?.metacritic;
@@ -66,9 +66,9 @@ function GameItem(props) {
 
   let arrSlugRender = getSlugsRender();
 
-  const dispatch = useDispatch();
-  // const modal = useSelector(state => state.GameReducer.modalGameItem.modal);
-  // console.log("~ srcVideo", srcVideo)
+  const handleLikeGame = () => {
+    dispatch({ type: TOGGLE_LIKE_GAME_SAGA });
+  }
 
   return (
     <div 
@@ -118,8 +118,8 @@ function GameItem(props) {
           </div>
         </div>
         <div className="game-item__info__title">
-          <a href="#/">{ titleName }</a>
-          <div className="game-item__info__title-react">
+          <span href="#/">{ titleName }</span>
+          <div onClick={ handleLikeGame } className="game-item__info__title-react">
             <AiFillLike/>
           </div>
         </div>
