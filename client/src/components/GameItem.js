@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { getPlatformIcon } from '../utils/clientHelper'
 import { BsFillPlayFill } from "react-icons/bs"
 import { AiFillLike, AiOutlineYoutube } from "react-icons/ai"
@@ -8,8 +8,14 @@ import GameItemImage from './GameItemImage';
 import Loading from './Loading';
 import { useDispatch } from 'react-redux';
 import { SET_SRC_MODAL_GAME, TOGGLE_LIKE_GAME_SAGA } from '../utils/constants';
+import AppContext from './AppContext';
+import { useHistory } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function GameItem(props) {
+  const history = useHistory();
+  const user = useContext(AppContext).state.user;
   const dispatch = useDispatch();
   let backgroundImage = props.gameInfo?.background_image;
   let { id, isLike, name, metacritic } = props.gameInfo;
@@ -68,11 +74,16 @@ function GameItem(props) {
   let arrSlugRender = getSlugsRender();
 
   const handleLikeGame = (id) => {
-    dispatch({ 
-      type: TOGGLE_LIKE_GAME_SAGA,
-      gameId: id
-    });
-    setLikeGame(!likeGame);
+    if(!!user) {
+      dispatch({ 
+        type: TOGGLE_LIKE_GAME_SAGA,
+        gameId: id
+      });
+      setLikeGame(!likeGame);
+    } else {
+      toast.dark("Please login to continue!");
+      history.push("/login");   
+    }
   }
 
   return (

@@ -207,3 +207,7 @@
     color: black!important;
   }
 }
+
+.ajs-message.ajs-warning.ajs-visible {
+  color: black;
+}
