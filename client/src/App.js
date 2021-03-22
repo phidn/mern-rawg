@@ -9,6 +9,7 @@ import { TOKEN, SET_CURRENT_USER, SERVER_DOMAIN } from './utils/constants';
 import axios from 'axios';
 import { AuthTemplate } from './templates/AuthTemplate';
 import SignupForm from './components/SignupForm';
+import { ToastContainer } from 'react-toastify';
 
 export default function App() {
   const state = useSelector(state => state.AppReducer);
@@ -35,12 +36,24 @@ export default function App() {
     },[dispatch]
   );
 
-    useEffect(() => {
-      checkCurrentUser();
-    }, [checkCurrentUser]);
+  useEffect(() => {
+    checkCurrentUser();
+  }, [checkCurrentUser]);
 
   return (
     <Router>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        />
+      <ToastContainer />
       <AppContext.Provider value={{ state }}>
         <Switch>
             <Route exact path="/" component={Home}/>

@@ -80,9 +80,9 @@ export default function Header() {
     })
   }
 
-  const user = useContext(AppContext).state.user;  
+  const user = useContext(AppContext).state.user;
   const signOut = () => {
-    localStorage.removeItem("awesome_twitter_token");
+    localStorage.removeItem("awesome_video_game_token");
     dispatch({type: SET_CURRENT_USER, payload: null});
   }
 
