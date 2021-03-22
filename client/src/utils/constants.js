@@ -1,6 +1,7 @@
 // system constant
 export const DOMAIN = "https://api.rawg.io/api";
-export const SERVER_DOMAIN = "http://localhost:5000/api/v1";
+// export const SERVER_DOMAIN = "http://localhost:5000/api/v1";
+export const SERVER_DOMAIN = "https://rawg-phidn.herokuapp.com/api/v1";
 export const ACCESS_TOKEN = "rawg_token";
 export const STATUS_CODE = {
   SUCCESS: 200

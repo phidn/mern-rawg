@@ -4,7 +4,7 @@ import "./../styles/Auth.css";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { SET_CURRENT_USER, TOKEN } from '../utils/constants';
+import { SERVER_DOMAIN, SET_CURRENT_USER, TOKEN } from '../utils/constants';
 
 export default function SignupForm(props) {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export default function SignupForm(props) {
     event.preventDefault();
     try {
       let response = await axios({
-        url: "/api/v1/auth/register",
+        url: `${SERVER_DOMAIN}/auth/register`,
         method: "POST",
         data: userInput
       });

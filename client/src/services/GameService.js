@@ -1,6 +1,6 @@
 import service from "./baseService";
 import axios from "axios";
-import { TOKEN } from "../utils/constants";
+import { SERVER_DOMAIN, TOKEN } from "../utils/constants";
 
 export const gameService = {
   fetchGameGenres: (slug,pageNumber) => 
@@ -10,7 +10,7 @@ export const gameService = {
   fetchGameLiked: () => {
     const token = localStorage.getItem(TOKEN);
     return axios({
-      url: `/api/v1/video/like/getAll`,
+      url: `${SERVER_DOMAIN}/video/like/getAll`,
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`
@@ -20,7 +20,7 @@ export const gameService = {
   toggleLikeGame: (id) => {
     const token = localStorage.getItem(TOKEN);
     return axios({
-      url: `/api/v1/video/like/${id}`,
+      url: `${SERVER_DOMAIN}/video/like/${id}`,
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`
