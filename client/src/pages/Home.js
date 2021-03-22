@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "./../styles/Home.css";
 import GameItem from '../components/GameItem';
 import Header from '../components/Header'
@@ -9,8 +9,11 @@ import { FETCH_GAME_GENRES_SAGA, FETCH_GAME_USER_LIKED_SAGA } from '../utils/con
 import { NavLink } from 'react-router-dom';
 import Loading from '../components/Loading';
 import GameItemModal from '../components/GameItemModal';
+import AppContext from '../components/AppContext';
 
-export default function Home(props) {
+function Home(props) {
+  const user = useContext(AppContext).state.user;
+  
   let { genres } = clientParams;  
 
   let slugParamGenres = props.match.params.genres || "action";
@@ -30,19 +33,22 @@ export default function Home(props) {
     window.onresize = () => {
       setColumnNumber(getColumnNumber());
     };
-    dispatch({
-      type: FETCH_GAME_USER_LIKED_SAGA
-    });
-  }, [dispatch]);
+    if(!!user) {
+      dispatch({
+        type: FETCH_GAME_USER_LIKED_SAGA
+      });
+    }
+  }, [dispatch, user]);
 
   const gameLiked = useSelector(state => state.GameReducer.gameLiked);
 
   useEffect(() => {
+    // reset state when slug param changed!
     setState({
       nextPage: 1,
       gamesRender: []
     })
-  }, [slugParamGenres])
+  }, [slugParamGenres]);
 
   useEffect(() => {
     if(!!slugParamGenres) {
@@ -102,7 +108,6 @@ export default function Home(props) {
       window.removeEventListener('scroll', handleScroll);
     };
   });
-
 
   return (
     <div className="page">
@@ -168,3 +173,5 @@ export default function Home(props) {
     </div>
   )
 }
+
+export default React.memo(Home);

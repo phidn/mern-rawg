@@ -5,10 +5,11 @@ import Home from './pages/Home'
 import LoginForm from './components/LoginForm';
 import AppContext from "./components/AppContext";
 import PageNotFound from './components/PageNotFound';
-import { TOKEN, SET_CURRENT_USER } from './utils/constants';
+import { TOKEN, SET_CURRENT_USER, SERVER_DOMAIN } from './utils/constants';
 import axios from 'axios';
 import { AuthTemplate } from './templates/AuthTemplate';
 import SignupForm from './components/SignupForm';
+import { ToastContainer } from 'react-toastify';
 
 export default function App() {
   const state = useSelector(state => state.AppReducer);
@@ -19,7 +20,7 @@ export default function App() {
       try {
         const token = localStorage.getItem(TOKEN);
         const res = await axios({
-          url: "/api/v1/auth",
+          url: `${SERVER_DOMAIN}/auth`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`
@@ -35,12 +36,24 @@ export default function App() {
     },[dispatch]
   );
 
-    useEffect(() => {
-      checkCurrentUser();
-    }, [checkCurrentUser]);
+  useEffect(() => {
+    checkCurrentUser();
+  }, [checkCurrentUser]);
 
   return (
     <Router>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        />
+      <ToastContainer />
       <AppContext.Provider value={{ state }}>
         <Switch>
             <Route exact path="/" component={Home}/>
