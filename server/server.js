@@ -14,6 +14,10 @@ app.use(cors());
 // Body parse
 app.use(express.json());
 
+if(process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 // Mount routes
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/video", videoRoute);
@@ -26,9 +30,8 @@ app.all("*", (req, res, next) => {
 })
 app.use(errorHandler);
 
-let hostname = process.env.APP_HOST;
-let port = process.env.APP_PORT;
+let port = process.env.PORT || 5000;
 
-app.listen(port,hostname,() => {
-  console.log(`Hello VAGABOND, I'm running at ${hostname}:${port}/`);
+app.listen(port,() => {
+  console.log(`Hello VAGABOND, I'm running at PORT: ${port}`);
 });
